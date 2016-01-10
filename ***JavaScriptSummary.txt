@@ -1,0 +1,23 @@
+===	equal value and equal type
+==	equal to
+
+JavaScript is the programming language of HTML and the Web.
+Programming makes computers do what you want them to do.
+
+------
+Key differences between Java and JavaScript: Java is an OOP programming language while Java Script is an OOP scripting language. 
+Java creates applications that run in a virtual machine or browser while JavaScript code is run on a browser only. Java code needs to be compiled while JavaScript code are all in text.
+------
+
+This tutorial will teach you JavaScript from basic to advanced.
+
+i know one is server side scripting and the other is browser side
+Not really.
+
+PHP is a programming language. It is often used for server side programming, but has uses in general programming too.
+
+JavaScript is a programming language. It is the only language that has a decent level of native support for running in a browser. It has a wide variety of server side implementations (including Node and ASP). It is one of the languages you can use with the Windows Scripting Host. etc.
+
+There are plenty of other languages that can be used for server side web programming too (C# is popular in ASP.NET, I'm rather fond of Perl, there are quite a lot of proponents of Python and Ruby, Java has a strong following, and so on).
+
+If we take your question to be about the difference between server side and client side programming though…
