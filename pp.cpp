@@ -7,9 +7,138 @@ A database table is said to be in 1NF if it contains no repeating fields/columns
 Separate the repeating fields into new database tables along with the key from unnormalized database table.
 The primary key of new database tables may be a composite key
 
+Techopedia explains Composite Key
+
+Any column(s) that can guarantee uniqueness is called a candidate key; however a composite key is a special type of candidate key that is only formed by a combination of two or more columns. Sometimes the candidate key is just a single column, and sometimes its formed by joining multiple columns.
 Normalization or data normalization is a process to organize the data into tabular format (database tables). A good database design includes the normalization, without normalization a database system may slow, inefficient and might not produce the expected result. Normalization reduces the data redundancy and inconsistent data dependency.
 Normal Forms
 We organize the data into database tables by using normal forms rules or conditions. Normal forms help us to make a good database design. Generally we organize the data up to third normal form. We rarely use the fourth and fifth normal form.
+
+In JavaScript, functions are first-class objects; that is, functions are of the type Object and they can be used in a first-class manner like any other object (String, Array, Number, etc.) since they are in fact objects themselves. They can be “stored in variables, passed as arguments to functions, created within functions, and returned from functions”1.
+public class Solution {
+    public ListNode reverseList(ListNode head) {       
+        if(head == null){
+            return head;
+        }
+        
+        ListNode cur = head;
+        ListNode pre= null;
+        while(cur!=null){
+            ListNode next = cur.next;
+            cur.next = pre;
+            
+            pre = cur;
+            cur = next;
+        }
+        return pre;
+        // //recursion
+        // //check input just
+        if(head == null){
+            return null;
+        }
+        
+        //this is truly useful base condition
+        if( head.next == null){
+            //System.out.println(head.val);
+            return head;
+        }
+        
+        //reverseList(head.next);
+        //we should do 
+        ListNode newHead = reverseList(head.next);
+        //System.out.println(head.val);
+        head.next.next = head;
+        head.next = null;
+        
+        //return head;
+        return newHead;
+    }
+}
+ class Node{
+    Node pre;
+    Node next;
+    int key;
+    int value;
+    
+    public Node(int key, int value){
+        this.key = key;
+        this.value = value;
+    }
+};
+//BST  *&&&&&*  LRU  &&&&& oop 
+
+public class LRUCache {
+    private int capacity;
+    //both has a hashmap and a doubly-linked list
+    private HashMap<Integer, Node> map = new HashMap<>();
+    private Node head = new Node(-1,-1);
+    private Node tail = new Node(-1,-1);
+    
+    public LRUCache(int capacity){
+        this.capacity = capacity;
+        head.next = tail;
+        tail.pre = head;
+        //always just from back to begin
+        //and then from begin to back
+    }
+    //break is implemented in line
+    //and move tail is implemented as a seperate function
+    private void moveTail(Node n){
+
+        tail.pre.next = n;
+        n.pre = tail.pre;
+        
+        tail.pre = n;
+        n.next = tail;
+    }
+    
+    public int get(int key){
+        
+        if(!map.containsKey(key)){
+            return -1;
+        }else{
+            //found
+            //we need to move the node to the tail and do not need to change the hashmap at all
+            //break the node from here
+            Node delete = map.get(key);
+            //before we delete the node
+            //we want to fetch the value stored in the node and then delete the mapped value
+            //map <int, Node> // key node -- node has key and value // key is mapped to node
+            int found =delete.val;
+
+            delete.pre.next = delete.next;
+            delete.next.pre = delete.pre;
+            
+            moveTail(delete);
+            return found;
+            
+        }
+    }
+        
+        
+    public void set(int key, int value){    
+        if(map.contains(key)){
+            map.get(key).val = value;
+            return;//no longer need anything if update the old value
+        }else{
+            //this is a new key value pair we need to create a new node
+            if(map.size() == capacity ){
+                //we need to remove the first node after head
+                map.remove(head.next.val);//remove this pair in the map
+                //update the linkedlist accordingly
+                head.next = head.next.next;
+                //here after head.next is already changed
+                head.next.pre = head;
+            }
+            
+            //anyhow we always need to create a new node and insert into the tail
+            Node n = new Node(key, value);
+            map.put(key, n);
+            moveTail(n);
+            return;
+        }
+    }
+};
 
 #include <iostream>
 #include <string.h>
@@ -504,6 +633,31 @@ public class Solution {
     }
 };
 
+
+bool treeContains( TreeNode *root, string item ) {
+     // Return true if item is one of the items in the binary
+     // sort tree to which root points.   Return false if not.
+ if ( root == NULL ) {
+       // Tree is empty, so it certainly doesn't contain item.
+    return false;
+ }
+ //failure sub solution
+ //success termination
+ if ( item == root->item ) {
+       // Yes, the item has been found in the root node.
+    return true;
+ }
+ else if ( item < root->item ) {
+       // If the item occurs, it must be in the left subtree.
+    return treeContains( root->left, item );
+ }
+ else {
+       // If the item occurs, it must be in the right subtree.
+    return treeContains( root->right, item );
+ }
+}  // end treeContains()    
+}
+
 1. Find Min and Max of an array in only one   traversal 2. Given a chessboard find maximum number of squares present 3. Job description. 4. Difference between deep and shallow copy. 5. What is C++ 6. Whats "preinitialization" 
  1. reverse a linked list 1.1 Use Recursion 2. Copy   constructor, operator = different used cases, code 3. Deep Copy, Shallow Copy Used cases 4. Different versions of polymorphism, how to solve the problem of multiple inheritance. 5. Deep look into Virtual concepts, inheritance. 6. Template classes, WAP operator= for template class such that it behaves differently for int and char * 7. Given a tree, WAP such that a matrix is generated so that: Tree: 1 / \ 2 3 | / \ 4 5 6 1 2 3 4 5 6 1 0 1 1 1 1 1 2 0 0 0 1 0 0 3 0 0 0 0 1 1 4 0 0 0 0 0 0 5 0 0 0 0 0 0 6 0 0 0 0 0 0 Hint: Preorder 8. Given an array, 1 2 0 5 4 88 0 0 0 6 make it, 1 2 5 4 88 6 0 0 0 0 9. Gave me class hierarchy, List the number of VTables created 10. When to use List and when to use Vector of STL 11. Given a string "I LOVE INDIA", print "INDIA LOVE I" 
 
@@ -586,3 +740,101 @@ An assignment operator is used to replace the data of a previously initialized o
 
 A& operator=(const A& rhs) {data_ = rhs.data_; return *this;}
 You could replac
+
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <string>
+#include <stdexcept>
+
+using namespace std;
+
+template <class T>
+class Stack { 
+  private: 
+    vector<T> elems;     // elements 
+
+  public: 
+    void push(T const&);  // push element 
+    void pop();               // pop element 
+    T top() const;            // return top element 
+    bool empty() const{       // return true if empty.
+        return elems.empty(); 
+    } 
+}; 
+
+template <class T>
+void Stack<T>::push (T const& elem) 
+{ 
+    // append copy of passed element 
+    elems.push_back(elem);    
+} 
+
+template <class T>
+void Stack<T>::pop () 
+{ 
+    if (elems.empty()) { 
+        throw out_of_range("Stack<>::pop(): empty stack"); 
+    }
+	// remove last element 
+    elems.pop_back();         
+} 
+
+template <class T>
+T Stack<T>::top () const 
+{ 
+    if (elems.empty()) { 
+        throw out_of_range("Stack<>::top(): empty stack"); 
+    }
+	// return copy of last element 
+    return elems.back();      
+} 
+
+int main() 
+{ 
+    try { 
+        Stack<int>         intStack;  // stack of ints 
+        Stack<string> stringStack;    // stack of strings 
+
+        // manipulate int stack 
+        intStack.push(7); 
+        cout << intStack.top() <<endl; 
+
+        // manipulate string stack 
+        stringStack.push("hello"); 
+        cout << stringStack.top() << std::endl; 
+        stringStack.pop(); 
+        stringStack.pop(); 
+    } 
+    catch (exception const& ex) { 
+        cerr << "Exception: " << ex.what() <<endl; 
+        return -1;
+    } 
+} 
+
+
+-------------------const functions are declared so that it could be safely called on the const object--------to make sure that the const object would not be changed by functions
+Const Functions
+
+The effects of declaring a variable to be const propagate throughout the program. Once you have a const object, it cannot be assigned to a non-const reference or use functions that are known to be capable of changing the state of the object. This is necessary to enforce the const-ness of the object, but it means you need a way to state that a function should not make changes to an object. In non-object-oriented code, this is as easy as using const references as demonstrated above. 
+
+In C++, however, there's the issue of classes with methods. If you have a const object, you don't want to call methods that can change the object, so you need a way of letting the compiler know which methods can be safely called. These methods are called "const functions", and are the only functions that can be called on a const object. Note, by the way, that only member methods make sense as const methods. Remember that in C++, every method of an object receives an implicit this pointer to the object; const methods effectively receive a const this pointer. 
+
+The way to declare that a function is safe for const objects is simply to mark it as const; the syntax for const functions is a little bit peculiar because theres only one place where you can really put the const: at the end of the function:
+<return-value> <class>::<member-function>(<args>) const
+{
+        // ...
+}
+For instance,
+int Loan::calcInterest() const
+{
+        return loan_value * interest_rate; 
+}
+
+
+Note that just because a function is declared const that doesn't prohibit non-const functions from using it; the rule is this:
+Const functions can always be called
+Non-const functions can only be called by non-const objects
+That makes sense: if you have a const function, all that means is that it guarantees it won't change the object. So just because it is const doesn't mean that non-const objects can't use it. 
+
+As a matter of fact, const functions have a slightly stronger restriction than merely that they cannot modify the data. They must make it so that they cannot be used in a way that would allow you to use them to modify const data. This means that when const functions return references or pointers to members of the class, they must also be const.
