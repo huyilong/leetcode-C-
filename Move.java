@@ -1,34 +1,6 @@
 import java.io.*;
 import java.util.*;
 class Solution {
-	public static void main(String[] args) {
-    //create a list of word lists to test
-		ArrayList<String> words1 = new ArrayList<>();
-		words1.add("quick");
-		words1.add("lazy");
-		ArrayList<String> words2 = new ArrayList<>();
-		words2.add("brown");
-		words2.add("black");
-		words2.add("grey");
-		ArrayList<String> words3 = new ArrayList<>();
-		words3.add("fox");
-		words3.add("dog");
-    //add the word lists into the dictionary
-		ArrayList<ArrayList<String>> dict = new ArrayList<ArrayList<String>>();
-		dict.add(words1);
-		dict.add(words2);
-		dict.add(words3);
-    //call the helper and get the combination result
-		ArrayList<ArrayList<String>> res = helper(dict);
-    //print out the result
-		for(ArrayList<String> sub: res){
-			for(String s : sub){
-				System.out.print(s+" ");
-			}
-			System.out.println();
-		}
-	}
-	
 	private static ArrayList<ArrayList<String>> helper(ArrayList<ArrayList<String>> dict){ 
 		ArrayList<ArrayList<String>> res = new ArrayList<ArrayList<String>>();
     //check illegal input
@@ -225,7 +197,7 @@ public class Move{
 }
 
 class MoveCmp implements Comparator<Integer>{
-	
+
 	@Override
 	public int compare(int in) {
 		return -in;
